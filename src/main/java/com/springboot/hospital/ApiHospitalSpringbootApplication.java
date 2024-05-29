@@ -20,7 +20,7 @@ public class ApiHospitalSpringbootApplication {
 		SpringApplication.run(ApiHospitalSpringbootApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	CommandLineRunner start(PacienteRepository pacienteRepository,
 							MedicoRepository medicoRepository,
 							CitaRepository citaRepository,
