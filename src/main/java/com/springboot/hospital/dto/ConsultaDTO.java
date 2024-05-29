@@ -19,7 +19,7 @@ public class ConsultaDTO {
         return sdf.parse(this.fechaConsulta);
     }
 
-    public void setFechaConsultaFromDate(Date fechaConsulta){
+    public void setFechaConsultaFromDate(Date fechaConsulta) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.fechaConsulta = sdf.format(fechaConsulta);
     }

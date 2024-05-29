@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Component
 public class ConsultaMapper {
@@ -30,7 +29,7 @@ public class ConsultaMapper {
         consultaDTO.setFechaConsulta(dateFormat.format(consulta.getFechaConsulta()));
         consultaDTO.setInforme(consulta.getInforme());
 
-        if(consulta.getCita() != null){
+        if (consulta.getCita() != null) {
             Cita cita = consulta.getCita();
             CitaDTO citaDTO = new CitaDTO();
 
@@ -53,7 +52,7 @@ public class ConsultaMapper {
         consulta.setFechaConsulta(dateFormat.parse(consultaDTO.getFechaConsulta()));
         consulta.setInforme(consultaDTO.getInforme());
 
-        if(consultaDTO.getCitaDTO() != null){
+        if (consultaDTO.getCitaDTO() != null) {
             CitaDTO citaDTO = consultaDTO.getCitaDTO();
             Cita cita = new Cita();
 

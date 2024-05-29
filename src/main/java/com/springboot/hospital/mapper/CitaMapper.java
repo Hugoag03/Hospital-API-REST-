@@ -7,7 +7,6 @@ import com.springboot.hospital.model.Paciente;
 import com.springboot.hospital.model.StatusCita;
 import com.springboot.hospital.repository.MedicoRepository;
 import com.springboot.hospital.repository.PacienteRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +23,7 @@ public class CitaMapper {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public CitaDTO toDTO(Cita cita){
+    public CitaDTO toDTO(Cita cita) {
         CitaDTO citaDTO = new CitaDTO();
         citaDTO.setId(cita.getId());
 

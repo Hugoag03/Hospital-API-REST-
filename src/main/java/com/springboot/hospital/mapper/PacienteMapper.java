@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class PacienteMapper {
 
-    public PacienteDTO toDTO(Paciente paciente){
+    public PacienteDTO toDTO(Paciente paciente) {
         PacienteDTO pacienteDTO = new PacienteDTO();
 
         BeanUtils.copyProperties(paciente, pacienteDTO);
         return pacienteDTO;
     }
 
-    public Paciente toEntity(PacienteDTO pacienteDTO){
+    public Paciente toEntity(PacienteDTO pacienteDTO) {
         Paciente paciente = new Paciente();
 
         BeanUtils.copyProperties(pacienteDTO, paciente);
