@@ -10,6 +10,7 @@ import com.springboot.hospital.repository.ConsultaRepository;
 import com.springboot.hospital.service.CitaService;
 import com.springboot.hospital.service.ConsultaService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +35,17 @@ public class ConsultaServiceImpl implements ConsultaService {
     @Autowired
     private CitaMapper citaMapper;
 
+
+
     @Override
     public List<ConsultaDTO> getAllConsultas() {
         return consultaRepository.findAll().stream()
-                .map(consultaMapper::toDTO)
-                .collect(Collectors.toList());
+                    .map(consultaMapper::toDTO)
+                    .collect(Collectors.toList());
+
     }
 
+    @SneakyThrows
     @Override
     public Optional<ConsultaDTO> getConsultaById(Long id) {
         Optional<Consulta> consulta = consultaRepository.findById(id);
@@ -93,6 +98,7 @@ public class ConsultaServiceImpl implements ConsultaService {
         consultaRepository.deleteById(id);
     }
 
+    @SneakyThrows
     @Override
     public List<ConsultaDTO> getConsultasByInformeContaining(String searchTerm) {
         List<Consulta> consultas = consultaRepository.findByInformeContainingIgnoreCase(searchTerm);
@@ -101,6 +107,7 @@ public class ConsultaServiceImpl implements ConsultaService {
                 .collect(Collectors.toList());
     }
 
+    @SneakyThrows
     @Override
     public List<ConsultaDTO> getConsultasByCita(Cita cita) {
         List<Consulta> consultas = consultaRepository.findByCita(cita);

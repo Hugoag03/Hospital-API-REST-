@@ -4,5 +4,5 @@ public enum StatusCita {
 
     PENDIENTE,
     CANCELADA,
-    REALIZADA
+    REALIZADAR
 }

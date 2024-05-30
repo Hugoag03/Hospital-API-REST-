@@ -14,13 +14,13 @@ public class ConsultaDTO {
     private String informe;
     private CitaDTO citaDTO;
 
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public Date getFechaConsultaAsDate() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.parse(this.fechaConsulta);
+        return dateFormat.parse(this.fechaConsulta);
     }
 
     public void setFechaConsultaFromDate(Date fechaConsulta) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.fechaConsulta = sdf.format(fechaConsulta);
+        this.fechaConsulta = dateFormat.format(fechaConsulta);
     }
 }

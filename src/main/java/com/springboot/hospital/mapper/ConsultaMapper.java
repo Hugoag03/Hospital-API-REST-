@@ -2,7 +2,11 @@ package com.springboot.hospital.mapper;
 
 import com.springboot.hospital.dto.CitaDTO;
 import com.springboot.hospital.dto.ConsultaDTO;
-import com.springboot.hospital.model.*;
+import com.springboot.hospital.model.Cita;
+import com.springboot.hospital.model.Consulta;
+import com.springboot.hospital.model.Medico;
+import com.springboot.hospital.model.Paciente;
+import com.springboot.hospital.model.StatusCita;
 import com.springboot.hospital.repository.MedicoRepository;
 import com.springboot.hospital.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,27 +26,30 @@ public class ConsultaMapper {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public ConsultaDTO toDTO(Consulta consulta) throws ParseException {
-        ConsultaDTO consultaDTO = new ConsultaDTO();
+    public ConsultaDTO toDTO(Consulta consulta) {
+        return handleParseException(() -> {
+            ConsultaDTO consultaDTO = new ConsultaDTO();
 
-        consultaDTO.setId(consulta.getId());
-        consultaDTO.setFechaConsulta(dateFormat.format(consulta.getFechaConsulta()));
-        consultaDTO.setInforme(consulta.getInforme());
+            consultaDTO.setId(consulta.getId());
+            consultaDTO.setFechaConsulta(dateFormat.format(consulta.getFechaConsulta()));
+            consultaDTO.setInforme(consulta.getInforme());
 
-        if (consulta.getCita() != null) {
-            Cita cita = consulta.getCita();
-            CitaDTO citaDTO = new CitaDTO();
+            if (consulta.getCita() != null) {
+                Cita cita = consulta.getCita();
+                CitaDTO citaDTO = new CitaDTO();
 
-            citaDTO.setId(cita.getId());
-            citaDTO.setFecha(dateFormat.format(cita.getFecha()));
-            citaDTO.setCancelado(cita.isCancelado());
-            citaDTO.setStatusCita(cita.getStatusCita().toString());
-            citaDTO.setPacienteId(cita.getPaciente().getId());
-            citaDTO.setMedicoId(cita.getMedico().getId());
+                citaDTO.setId(cita.getId());
+                citaDTO.setFecha(dateFormat.format(cita.getFecha()));
+                citaDTO.setCancelado(cita.isCancelado());
+                citaDTO.setStatusCita(cita.getStatusCita().toString());
+                citaDTO.setPacienteId(cita.getPaciente().getId());
+                citaDTO.setMedicoId(cita.getMedico().getId());
 
-            consultaDTO.setCitaDTO(citaDTO);
-        }
-        return consultaDTO;
+                consultaDTO.setCitaDTO(citaDTO);
+            }
+
+            return consultaDTO;
+        });
     }
 
     public Consulta toEntity(ConsultaDTO consultaDTO) throws ParseException {
@@ -55,7 +62,6 @@ public class ConsultaMapper {
         if (consultaDTO.getCitaDTO() != null) {
             CitaDTO citaDTO = consultaDTO.getCitaDTO();
             Cita cita = new Cita();
-
 
             cita.setId(citaDTO.getId());
             cita.setFecha(dateFormat.parse(citaDTO.getFecha()));
@@ -71,5 +77,19 @@ public class ConsultaMapper {
             consulta.setCita(cita);
         }
         return consulta;
+    }
+
+    private <T> T handleParseException(ThrowingSupplier<T, ParseException> supplier) {
+        try {
+            return supplier.get();
+        } catch (ParseException e) {
+            e.printStackTrace();  // Aquí puedes manejar la excepción de alguna manera adecuada
+            return null;  // O manejar el valor de retorno de manera adecuada
+        }
+    }
+
+    @FunctionalInterface
+    interface ThrowingSupplier<T, E extends Exception> {
+        T get() throws E;
     }
 }
